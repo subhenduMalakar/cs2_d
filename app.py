@@ -19,13 +19,8 @@ import time
 
 app = Flask(__name__)
 app.config['CACHE_TYPE'] = 'SimpleCache' 
-# cache = Cache(app)
-cache = Cache(app, config={
-        'CACHE_TYPE': 'filesystem',
-        'CACHE_DIR': 'cache-dir', 
-        'CACHE_DEFAULT_TIMEOUT': 922337203685477580,
-        'CACHE_THRESHOLD': 922337203685477580
-    })
+cache = Cache(app)
+
 
 app.config['UPLOAD_FOLDER']='./img'
 
@@ -63,5 +58,5 @@ def get_pre():
     os.remove(path)
     return render_template('index.html',result=keys[values.index(ind)]) 
 
-if __name__=='__main__':
-    app.run(port=8080,debug=True)
+# if __name__=='__main__':
+#     app.run(port=8080,debug=True)
