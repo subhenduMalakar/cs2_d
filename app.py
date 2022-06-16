@@ -13,7 +13,8 @@ from flask import Flask
 from flask_caching import Cache
 from apscheduler.schedulers.background import BackgroundScheduler
 from werkzeug.utils import secure_filename
-import tensorflow as tf
+# import tensorflow as tf
+import keras
 from zipfile import ZipFile
 import time
 
@@ -43,11 +44,11 @@ def get_pre():
     filename = secure_filename(file.filename)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-    ResNet50_model = tf.keras.models.load_model('cs2-m/weights-02-0.9045.hdf5')
+    ResNet50_model = keras.models.load_model('cs2-m/weights-02-0.9045.hdf5')
 
     path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    pre1=tf.keras.preprocessing.image.load_img(path,target_size=(400, 400)) # For class afghan_hound
-    pre2 = tf.keras.preprocessing.image.img_to_array(pre1)
+    pre1=keras.preprocessing.image.load_img(path,target_size=(400, 400)) # For class afghan_hound
+    pre2 = keras.preprocessing.image.img_to_array(pre1)
     pre2 = np.expand_dims(pre2, axis = 0)
     pred=ResNet50_model.predict(pre2)
 
