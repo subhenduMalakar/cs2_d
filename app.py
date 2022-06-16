@@ -26,7 +26,7 @@ app.config['UPLOAD_FOLDER']='./img'
 
 @app.before_first_request
 def do_something_only_once():
-    if not os.path.exists('cs2-m/weights-02-0.3378.hdf5'):
+    if not os.path.exists('cs2-m/weights-02-0.9045.hdf5'):
         od.download('https://www.kaggle.com/datasets/subhendumalakar/cs2-m',force=True)
         time.sleep(1000)
         zf = ZipFile('cs2-m.zip', 'r')
@@ -43,10 +43,10 @@ def get_pre():
     filename = secure_filename(file.filename)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-    ResNet50_model = tf.keras.models.load_model('cs2-m/weights-02-0.3378.hdf5')
+    ResNet50_model = tf.keras.models.load_model('cs2-m/weights-02-0.9045.hdf5')
 
     path=os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    pre1=tf.keras.preprocessing.image.load_img(path,target_size=(128, 128)) # For class afghan_hound
+    pre1=tf.keras.preprocessing.image.load_img(path,target_size=(400, 400)) # For class afghan_hound
     pre2 = tf.keras.preprocessing.image.img_to_array(pre1)
     pre2 = np.expand_dims(pre2, axis = 0)
     pred=ResNet50_model.predict(pre2)
@@ -59,4 +59,4 @@ def get_pre():
     return render_template('index.html',result=keys[values.index(ind)]) 
 
 if __name__=='__main__':
-    app.run(host='0.0.0.0',port=80,debug=True)
+    app.run(host='0.0.0.0',port=8080,debug=True)

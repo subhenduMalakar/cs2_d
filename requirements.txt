@@ -1,3 +1,4 @@
+tensorflow==2.6.4
 backcall==0.2.0
 cachelib==0.7.0
 certifi==2022.5.18.1
@@ -69,4 +70,4 @@ xgboost==1.6.1
 zipp==3.8.0
 Gunicorn
 apscheduler
-tensorflow==2
+
